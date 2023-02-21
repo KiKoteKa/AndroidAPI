@@ -1,0 +1,36 @@
+package zubkov.vadim.pruebasandroiddiseo.screens.users.ui
+
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import zubkov.vadim.pruebasandroiddiseo.screens.login.ui.UserViewModel
+import zubkov.vadim.pruebasandroiddiseo.screens.users.data.dto.PersonDTO
+import zubkov.vadim.pruebasandroiddiseo.screens.users.domin.usecase.PersonUseCase
+import javax.inject.Inject
+
+@HiltViewModel
+class PersonViewModel @Inject constructor(
+    private val personUseCase: PersonUseCase
+) : ViewModel() {
+    private var _Person = MutableLiveData<List<PersonDTO>>()
+    var person : LiveData<List<PersonDTO>> = _Person
+
+    fun changeList(){
+        person = _Person
+    }
+
+    fun returnPerson(userViewModel: UserViewModel){
+        Log.d("Hola","Entro en return")
+        viewModelScope.launch {
+            Log.d("Hola 1","Antes del Person")
+            _Person = MutableLiveData(personUseCase("${userViewModel.email.value}"))
+            Log.d("Hola 2","Despues del Person")
+            changeList()
+            Log.d("Hola 3","Final del Person")
+        }
+    }
+}
