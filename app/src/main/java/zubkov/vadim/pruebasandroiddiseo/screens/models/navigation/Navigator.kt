@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import zubkov.vadim.pruebasandroiddiseo.Components.CardExtended
 import zubkov.vadim.pruebasandroiddiseo.screens.mapscreen.ui.MapViewModel
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.Menu
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.MenuViewModel
@@ -52,6 +53,9 @@ fun CustomNavigator(
         composable(route = Routes.Home.route) {
             personViewModel.returnPerson(userViewModel)
             Menu(navigationController = navigationController, menuViewModel = menuViewModel,mapViewModel = mapViewModel)
+        }
+        composable(route = Routes.RouteDetail.route) {
+            CardExtended(navigationController = navigationController,menuViewModel)
         }
         composable(route = Routes.GmapScreen.route) {
             MapaGoogle(navigationController = navigationController, mapViewModel = mapViewModel, userViewModel = userViewModel)

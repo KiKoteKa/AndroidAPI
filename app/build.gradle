@@ -77,6 +77,8 @@ dependencies {
     //Dagger
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    //Pager
+    implementation "com.google.accompanist:accompanist-pager:0.22.0-rc"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

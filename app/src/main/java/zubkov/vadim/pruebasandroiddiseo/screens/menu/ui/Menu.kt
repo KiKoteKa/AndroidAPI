@@ -49,7 +49,11 @@ fun Menu(menuViewModel: MenuViewModel, navigationController: NavHostController, 
         ) {
             items(menuViewModel.routesList.value!!.size) { ruta ->
                 val route = menuViewModel.routesList.value!![ruta]
-               MainCard(route,mapViewModel,navigationController)
+                MainCard(route,mapViewModel,navigationController,
+                    onItemClicked = { card ->
+                        menuViewModel.updateActualRoute(card)
+                        navigationController.navigate(Routes.RouteDetail.route)
+                })
             }
         }
     }

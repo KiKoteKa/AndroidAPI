@@ -7,6 +7,7 @@ sealed class Routes(val route: String) {
     object RegisterMiddle: Routes("registerMiddle")
     object RegisterLast: Routes("registerLast")
     object Home: Routes("home")
+    object RouteDetail: Routes("route")
     object GmapScreen: Routes("gmap")
     object GmapPost: Routes("gmap_view")
     object Person: Routes("users")

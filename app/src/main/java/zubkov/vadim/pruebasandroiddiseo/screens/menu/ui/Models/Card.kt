@@ -257,14 +257,13 @@ fun Date(date: MenuDTO){
 */
 
 @Composable
-//fun Tarjeta(navigationController: NavHostController,globalViewModel: GlobalViewModel, ruta: Ruta, onItemClicked: (ruta: Ruta) -> Unit) {
-fun MainCard(ruta: MenuDTO, mapViewModel: MapViewModel,navigationController : NavHostController){
+fun MainCard(ruta: MenuDTO, mapViewModel: MapViewModel,navigationController : NavHostController,onItemClicked: (ruta: MenuDTO) -> Unit){
     //val tarjetaDeUsuario = globalViewModel.usuarioRegistrado.value!!.id == ruta.usuarioPublicado.id
     Card(
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
-            .clickable(onClick = { /*onItemClicked(ruta)*/ }),
+            .clickable(onClick = { onItemClicked(ruta) }),
         elevation = 8.dp
     ) {
         Row(
@@ -362,7 +361,7 @@ fun MainCard(ruta: MenuDTO, mapViewModel: MapViewModel,navigationController : Na
                             .clickable { /*navigationController.navigate("user/${ruta.usuarioPublicado.id}/true")*/ }
                     )
                     Text(
-                        text = "nick", //" ${ruta.usuarioPublicado.nick}",
+                        text = ruta.email,
                         style = MaterialTheme.typography.body1,
                         modifier = Modifier.padding(5.dp,0.dp,0.dp,0.dp)
                     )

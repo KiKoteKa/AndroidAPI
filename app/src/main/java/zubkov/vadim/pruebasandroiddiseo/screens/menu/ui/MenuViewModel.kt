@@ -28,4 +28,12 @@ class MenuViewModel @Inject constructor(
             changeList()
         }
     }
+
+    private var _actualRoute = MutableLiveData<MenuDTO>()
+    var actualRoute : LiveData<MenuDTO> = _actualRoute
+
+    fun updateActualRoute(route:MenuDTO){
+        _actualRoute.value = route
+    }
+
 }
