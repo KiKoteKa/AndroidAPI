@@ -30,7 +30,7 @@ import zubkov.vadim.pruebasandroiddiseo.R
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.data.dto.MenuDTO
 
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.MenuViewModel
-import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.Models.CorazonFavorito
+import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.Components.CorazonFavorito
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

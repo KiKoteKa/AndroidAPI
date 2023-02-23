@@ -65,16 +65,3 @@ fun PersonScreen(navigationController: NavHostController,personViewModel: Person
         }
     }
 }
-/*
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun Profile(user:PersonDTO,navigationController: NavHostController)
-{
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize().border(border = BorderStroke(0.3.dp, Color.Black)))
-    {
-
-    }
-}
-
- */
