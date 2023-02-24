@@ -9,5 +9,6 @@ data class PersonDTO(
     val date : String,
     val nick : String,
     val following : List<String>,
-    val photo : String
+    val photo : String,
+    val fav_routes : List<String>
 )

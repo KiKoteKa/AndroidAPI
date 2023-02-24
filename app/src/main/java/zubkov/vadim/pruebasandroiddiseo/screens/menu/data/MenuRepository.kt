@@ -2,7 +2,6 @@ package zubkov.vadim.pruebasandroiddiseo.screens.menu.data
 
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.data.dto.MenuDTO
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.data.network.MenuService
-import zubkov.vadim.pruebasandroiddiseo.screens.menu.domin.entity.MenuModel
 import javax.inject.Inject
 
 class MenuRepository @Inject constructor(
@@ -11,4 +10,13 @@ class MenuRepository @Inject constructor(
     suspend fun getRouteRepository():List<MenuDTO>{
         return api.getRoutes()
     }
+
+    suspend fun likeRoute(email:String,ruta:String){
+        api.likeRoute(email,ruta)
+    }
+
+    suspend fun unlikeRoute(email:String, ruta:String){
+        api.unlikeRoute(email,ruta)
+    }
+
 }

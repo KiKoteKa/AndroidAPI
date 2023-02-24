@@ -6,6 +6,7 @@ import javax.inject.Inject
 
 class MenuDTOFactory @Inject constructor(){
     operator fun invoke(
+        _id:String,
         email: String,
         date: String,
         name:String,
@@ -23,6 +24,7 @@ class MenuDTOFactory @Inject constructor(){
         rec_movement: List<LatLng>
     ) : MenuDTO {
         return MenuDTO(
+            _id = _id,
             email = email,
             date = date,
             name = name,

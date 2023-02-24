@@ -1,5 +1,6 @@
 package zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.Components
 
+import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -27,6 +28,8 @@ import kotlinx.coroutines.launch
 import zubkov.vadim.pruebasandroiddiseo.screens.mapscreen.ui.MapViewModel
 import zubkov.vadim.pruebasandroiddiseo.R
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.data.dto.MenuDTO
+import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.MenuViewModel
+import zubkov.vadim.pruebasandroiddiseo.screens.users.data.dto.PersonDTO
 
 /*
 @Composable
@@ -236,8 +239,11 @@ fun Date(date: MenuDTO){
 */
 
 @Composable
-fun MainCard(ruta: MenuDTO, mapViewModel: MapViewModel,navigationController : NavHostController,onItemClicked: (ruta: MenuDTO) -> Unit){
-    //val tarjetaDeUsuario = globalViewModel.usuarioRegistrado.value!!.id == ruta.usuarioPublicado.id
+fun MainCard(ruta: MenuDTO, mapViewModel: MapViewModel,navigationController : NavHostController,
+             user:PersonDTO,menuViewModel: MenuViewModel,ocultarLike:Boolean=false,onItemClicked: (ruta: MenuDTO) -> Unit){
+    val tarjetaDeUsuario = user.email == ruta.email
+    Log.d("Rutas", user.fav_routes.toString())
+    var likeAlready by remember {mutableStateOf(ruta._id in user.fav_routes)}
     Card(
         modifier = Modifier
             .padding(10.dp)
@@ -261,12 +267,26 @@ fun MainCard(ruta: MenuDTO, mapViewModel: MapViewModel,navigationController : Na
                 )
             }
             IconButton(
-                onClick = { /* Acción al hacer clic en el botón */ },
+                onClick = {
+                    if (likeAlready){
+                              menuViewModel.unlikeRuta(user.email,ruta._id)
+                              likeAlready = false
+                          }else{
+                              menuViewModel.likeRuta(user.email,ruta._id)
+                              likeAlready = true
+                          }
+                          },
                 modifier = Modifier.size(48.dp)
             ) {
-                //if(!tarjetaDeUsuario) {
-                    CorazonFavorito()
-                //}
+                if(!ocultarLike) {
+                    if (!tarjetaDeUsuario) {
+                        Icon(
+                            imageVector = Icons.Outlined.Favorite,
+                            contentDescription = "favorito",
+                            tint = if (likeAlready) Color.Red else Color.LightGray
+                        )
+                    }
+                }
             }
         }
         Row(
@@ -351,12 +371,13 @@ fun MainCard(ruta: MenuDTO, mapViewModel: MapViewModel,navigationController : Na
 }
 
 @Composable
-fun CorazonFavorito() {
+fun CorazonFavorito(enabled:Boolean = false) {
 
+/*
     val interactionSource = MutableInteractionSource()
     val coroutineScope = rememberCoroutineScope()
 
-    var enabled by remember { mutableStateOf(false) }
+    var enabled by remember { mutableStateOf(enabledInitial) }
 
     val scale = remember { Animatable(1f) }
 
@@ -384,4 +405,6 @@ fun CorazonFavorito() {
                 }
             }
     )
+
+ */
 }

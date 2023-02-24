@@ -119,6 +119,7 @@ class MapViewModel @Inject constructor(
         viewModelScope.launch {
             Log.d("State Loop","${mapLoadingMovement.value}")
             val map = mapModelFactory(
+                id = "asdasd",
                 email = userViewModel.email.value!!,
                 date = "${getTime()}",
                 name = "pruebadef",

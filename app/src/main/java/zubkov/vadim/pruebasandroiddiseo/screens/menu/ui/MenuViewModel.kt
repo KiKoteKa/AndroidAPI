@@ -1,5 +1,6 @@
 package zubkov.vadim.pruebasandroiddiseo.screens.menu.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.data.dto.MenuDTO
-import zubkov.vadim.pruebasandroiddiseo.screens.menu.domin.entity.MenuModel
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.domin.usecase.MenuUseCase
 import javax.inject.Inject
 
@@ -36,4 +36,15 @@ class MenuViewModel @Inject constructor(
         _actualRoute.value = route
     }
 
+    fun likeRuta(email:String, idRuta: String){
+        viewModelScope.launch {
+            menuUseCase.likeRoute(email,idRuta)
+        }
+    }
+
+    fun unlikeRuta(email:String, idRuta: String){
+        viewModelScope.launch {
+            menuUseCase.unlikeRoute(email,idRuta)
+        }
+    }
 }

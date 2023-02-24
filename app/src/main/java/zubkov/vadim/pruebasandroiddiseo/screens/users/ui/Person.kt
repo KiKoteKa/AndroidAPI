@@ -1,6 +1,7 @@
 package zubkov.vadim.pruebasandroiddiseo.screens.users
 
 import android.util.Log
+import android.view.Menu
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -20,6 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import zubkov.vadim.pruebasandroiddiseo.screens.login.ui.UserViewModel
+import zubkov.vadim.pruebasandroiddiseo.screens.mapscreen.ui.MapViewModel
+import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.MenuViewModel
 import zubkov.vadim.pruebasandroiddiseo.screens.models.BottomBarContent
 import zubkov.vadim.pruebasandroiddiseo.screens.models.TopBarContent
 import zubkov.vadim.pruebasandroiddiseo.screens.models.navigation.Routes
@@ -29,7 +32,8 @@ import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.PersonViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PersonScreen(navigationController: NavHostController,personViewModel: PersonViewModel,userViewModel: UserViewModel) {
+fun PersonScreen(navigationController: NavHostController,personViewModel: PersonViewModel,userViewModel: UserViewModel
+,mapViewModel:MapViewModel,menuViewModel:MenuViewModel) {
     personViewModel.returnPerson(userViewModel)
     Log.d("EMAIL EN PANTALLA USER","${userViewModel.email.value}")
     Scaffold(
@@ -60,7 +64,9 @@ fun PersonScreen(navigationController: NavHostController,personViewModel: Person
         ) {
             Profile(
                 navigationController,
-                user
+                user,
+                mapViewModel,
+                menuViewModel
             )
         }
     }

@@ -1,9 +1,12 @@
 package zubkov.vadim.pruebasandroiddiseo.screens.users.components
 
+import android.view.Menu
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -29,13 +32,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import zubkov.vadim.pruebasandroiddiseo.R
+import zubkov.vadim.pruebasandroiddiseo.screens.mapscreen.ui.MapViewModel
+import zubkov.vadim.pruebasandroiddiseo.screens.menu.data.dto.MenuDTO
+import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.Components.MainCard
+import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.MenuViewModel
 import zubkov.vadim.pruebasandroiddiseo.screens.models.navigation.Routes
 import zubkov.vadim.pruebasandroiddiseo.screens.users.data.dto.PersonDTO
 
 
 @ExperimentalFoundationApi
 @Composable
-fun Profile(navigationController: NavHostController, user:PersonDTO){
+fun Profile(navigationController: NavHostController, user:PersonDTO,
+            mapViewModel: MapViewModel,menuViewModel: MenuViewModel
+){
 
         var selectedTabIndex by remember {
             mutableStateOf(0)
@@ -85,38 +94,47 @@ fun Profile(navigationController: NavHostController, user:PersonDTO){
             ) {
                 selectedTabIndex = it
             }
-            /*
+
             when (selectedTabIndex) {
 
                 0 ->
                     MostrarRutas(
-                    idRutas = usuario.rutas,
-                    modifier = Modifier.fillMaxWidth(),
-                    navigationController
-                )
+                        rutasLikeUser(user,menuViewModel.routesList.value!!),
+                        modifier = Modifier.fillMaxWidth(),
+                        navigationController,
+                        mapViewModel,
+                        user,
+                        menuViewModel
+                    )
                 1 -> MostrarRutas(
-                    idRutas = usuario.rutasSeguidas,
+                    rutasLikeUser(user,menuViewModel.routesList.value!!),
                     modifier = Modifier.fillMaxWidth(),
-                    navigationController
+                    navigationController,
+                    mapViewModel,
+                    user,
+                    menuViewModel
                 )
                 2 -> MostrarUsuarios(
-                    usuario.seguidos,
+                    listOf(),
                     modifier = Modifier.fillMaxWidth(),
                     navigationController
                 )
                 3 -> MostrarUsuarios(
-                    usuario.seguidores,
+                    listOf(),
                     modifier = Modifier.fillMaxWidth(),
                     navigationController
                 )
             }
 
-             */
+
         }
     }
 
 
-
+fun rutasLikeUser(user: PersonDTO,listaRutas:List<MenuDTO>):List<MenuDTO>
+{
+    return listaRutas.filter{ruta-> ruta._id in user.fav_routes}
+}
 
 @Composable
 fun Header(
@@ -403,18 +421,24 @@ fun PostTabView(
 @ExperimentalFoundationApi
 @Composable
 fun MostrarRutas(
-    idRutas: List<Int>,
+    listaRutas: List<MenuDTO>,
     modifier: Modifier = Modifier,
-    navigationController: NavHostController
+    navigationController: NavHostController,
+    mapViewModel: MapViewModel,
+    user:PersonDTO,
+    menuViewModel: MenuViewModel
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
+    LazyColumn(
         modifier = modifier
             .scale(1.01f)
             .fillMaxSize()
     ) {
-        items(idRutas.size) {
-            //CardRuta(StaticData().getRuta(it),navigationController)
+        items(listaRutas) { ruta ->
+            MainCard(ruta, mapViewModel, navigationController,user,menuViewModel,true,
+                onItemClicked = { card ->
+                    menuViewModel.updateActualRoute(card)
+                    navigationController.navigate(Routes.RouteDetail.route)
+                })
         }
     }
 }

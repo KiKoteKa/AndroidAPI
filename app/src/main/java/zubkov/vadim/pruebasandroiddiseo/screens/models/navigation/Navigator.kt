@@ -52,8 +52,10 @@ fun CustomNavigator(
             RegisterLastScreen(navigationController = navigationController, registerViewModel = registerViewModel)
         }
         composable(route = Routes.Home.route) {
-            personViewModel.returnPerson(userViewModel)
-            Menu(navigationController = navigationController, menuViewModel = menuViewModel,mapViewModel = mapViewModel)
+
+            Menu(navigationController = navigationController, menuViewModel = menuViewModel,mapViewModel = mapViewModel,
+                personViewModel = personViewModel, userViewModel = userViewModel
+            )
         }
         composable(route = Routes.RouteDetail.route) {
             CardExtended(navigationController = navigationController,menuViewModel)
@@ -65,7 +67,7 @@ fun CustomNavigator(
             GoogleMapsView(navigationController = navigationController, mapViewModel = mapViewModel)
         }
         composable(route = Routes.Person.route) {
-            PersonScreen(navigationController = navigationController,personViewModel,userViewModel)
+            PersonScreen(navigationController = navigationController,personViewModel,userViewModel,mapViewModel,menuViewModel)
         }
         composable(route = Routes.PersonDetail.route) {
             ProfileDetail(navigationController = navigationController,personViewModel,userViewModel)

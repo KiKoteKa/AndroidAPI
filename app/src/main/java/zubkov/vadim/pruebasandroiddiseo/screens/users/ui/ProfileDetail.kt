@@ -30,17 +30,11 @@ import java.text.SimpleDateFormat
 
 @Composable
 fun ProfileDetail(navigationController: NavHostController,personViewModel: PersonViewModel,userViewModel: UserViewModel){
-    /*
-    val usuario = StaticData().getUsuarios()[idUsuario]
-    val usuarioPropio = globalViewModel.usuarioRegistrado?.value?.id == usuario.id
-    */
-
     personViewModel.returnPerson(userViewModel)
     val user = personViewModel.person.value!!.first()
-
-
     Scaffold(
         topBar = {
+
             TopAppBar(
                 title = {
                     Text(

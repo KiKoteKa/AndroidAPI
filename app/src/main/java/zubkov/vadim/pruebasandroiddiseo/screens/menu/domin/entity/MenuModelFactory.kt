@@ -5,6 +5,7 @@ import javax.inject.Inject
 
 class MenuModelFactory @Inject constructor(){
     operator fun invoke(
+        id:String,
         email: String,
         date: String,
         name:String,
@@ -22,6 +23,7 @@ class MenuModelFactory @Inject constructor(){
         rec_movement: List<LatLng>
     ) : MenuModel {
         return MenuModel(
+            id = id,
             email = email,
             date = date,
             name = name,

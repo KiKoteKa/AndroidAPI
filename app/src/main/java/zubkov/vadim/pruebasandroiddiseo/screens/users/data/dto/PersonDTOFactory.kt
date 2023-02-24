@@ -10,7 +10,8 @@ class PersonDTOFactory @Inject constructor(){
         date : String,
         nick : String,
         following : List<String>,
-        photo : String
+        photo : String,
+        fav_routes : List<String>
     ) : PersonDTO {
         return PersonDTO(
             name = name,
@@ -19,7 +20,8 @@ class PersonDTOFactory @Inject constructor(){
             date = date,
             nick = nick,
             following = following,
-            photo = photo
+            photo = photo,
+            fav_routes = fav_routes
         )
     }
 }

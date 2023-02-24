@@ -3,6 +3,7 @@ package zubkov.vadim.pruebasandroiddiseo.screens.menu.domin.entity
 import com.google.android.gms.maps.model.LatLng
 
 data class MenuModel(
+    var id: String,
     var email: String,
     var date: String,
     var name:String,

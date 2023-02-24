@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 
 data class MenuDTO(
+    @SerializedName("_id") var _id: String = "",
     @SerializedName("email") var email: String,
     @SerializedName("date") var date: String,
     @SerializedName("name") var name:String,
