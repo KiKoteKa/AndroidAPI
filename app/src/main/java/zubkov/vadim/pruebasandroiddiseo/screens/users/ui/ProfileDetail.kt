@@ -21,8 +21,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import zubkov.vadim.pruebasandroiddiseo.R
 import zubkov.vadim.pruebasandroiddiseo.screens.login.ui.UserViewModel
+import zubkov.vadim.pruebasandroiddiseo.screens.models.navigation.Routes
 import zubkov.vadim.pruebasandroiddiseo.screens.users.components.Header
 import zubkov.vadim.pruebasandroiddiseo.screens.users.data.dto.PersonDTO
+import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.ModificarUsuario
 import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.PersonViewModel
 import java.text.SimpleDateFormat
 
@@ -36,19 +38,44 @@ fun ProfileDetail(navigationController: NavHostController,personViewModel: Perso
     personViewModel.returnPerson(userViewModel)
     val user = personViewModel.person.value!!.first()
 
-    Column(modifier = Modifier.fillMaxWidth().background(Color.LightGray)) {
-        Header(
-            name = user.nick,
-            true,
-            false,
-            navigationController
-        )
-        PerfilUsuarioDetalleComp(user,true)
-    }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = user.nick,
+                        modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
+                        color  =Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.h5
+                    )
+                },
+                backgroundColor = MaterialTheme.colors.background,
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp, 24.dp)
+                            .clickable {
+                                navigationController.navigateUp()
+                            },
+                        tint = Color.Black
+                    )
+                }
+            )
+        },
+
+        content = {
+            PerfilUsuarioDetalleComp(user,true,navigationController)
+        }
+    )
+
 }
 
 @Composable
-fun PerfilUsuarioDetalleComp(usuario: PersonDTO,editable:Boolean) {
+fun PerfilUsuarioDetalleComp(usuario: PersonDTO,editable:Boolean,navigationController: NavHostController) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
@@ -63,7 +90,9 @@ fun PerfilUsuarioDetalleComp(usuario: PersonDTO,editable:Boolean) {
         Texto(usuario.date, " F.Nacimiento", Icons.Default.DateRange)
         TextoDescripcion("No hay descripción disponible","Descripción")
         if (editable) {
-            BotonEditarPerfil(text = "Editar Perfil ", icon = Icons.Default.Settings)
+            BotonEditarPerfil(text = "Editar Perfil ", icon = Icons.Default.Settings,
+                navigationController = navigationController
+            )
         }
         Spacer(modifier = Modifier.height(25.dp))
     }
@@ -134,14 +163,14 @@ fun TextoDescripcion(valor:String,texto:String){
 fun BotonEditarPerfil(
     modifier: Modifier = Modifier,
     text: String? = null,
-    icon: ImageVector? = null
-
+    icon: ImageVector? = null,
+    navigationController: NavHostController
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .clickable {}
+            .clickable {navigationController.navigate(Routes.ModifyUser.route)}
             .width(200.dp)
             .height(50.dp)
             .background(Color.LightGray, shape = RoundedCornerShape(10.dp))

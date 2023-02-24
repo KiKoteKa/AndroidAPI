@@ -296,11 +296,11 @@ navigationController: NavHostController
             .clickable {
                 navigationController.navigate(Routes.PersonDetail.route)
             }
-            .background(Color.LightGray, shape = RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colors.background, shape = RoundedCornerShape(12.dp))
             .clip(RoundedCornerShape(12.dp))
             .border(
                 width = 1.5.dp,
-                color = MaterialTheme.colors.background,
+                color = Color.Gray,
                 shape = RoundedCornerShape(12.dp)
             )
             .padding(6.dp)

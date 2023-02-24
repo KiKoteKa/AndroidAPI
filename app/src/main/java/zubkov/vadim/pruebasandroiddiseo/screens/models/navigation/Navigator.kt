@@ -19,6 +19,7 @@ import zubkov.vadim.pruebasandroiddiseo.screens.register.ui.views.RegisterMiddle
 import zubkov.vadim.pruebasandroiddiseo.screens.splashscreen.SplashScreen
 import zubkov.vadim.pruebasandroiddiseo.screens.users.PersonScreen
 import zubkov.vadim.pruebasandroiddiseo.screens.users.ProfileDetail
+import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.EditUserScreen
 import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.PersonViewModel
 import javax.inject.Singleton
 
@@ -68,6 +69,9 @@ fun CustomNavigator(
         }
         composable(route = Routes.PersonDetail.route) {
             ProfileDetail(navigationController = navigationController,personViewModel,userViewModel)
+        }
+        composable(route = Routes.ModifyUser.route) {
+            EditUserScreen(navigationController = navigationController,personViewModel,userViewModel)
         }
     }
 }

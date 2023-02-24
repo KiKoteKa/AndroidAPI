@@ -12,4 +12,5 @@ sealed class Routes(val route: String) {
     object GmapPost: Routes("gmap_view")
     object Person: Routes("users")
     object PersonDetail: Routes("usersDetail")
+    object ModifyUser: Routes("modifyUser")
 }
