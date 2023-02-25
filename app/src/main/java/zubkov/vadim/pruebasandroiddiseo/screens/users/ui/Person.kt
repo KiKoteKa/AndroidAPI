@@ -66,7 +66,9 @@ fun PersonScreen(navigationController: NavHostController,personViewModel: Person
                 navigationController,
                 user,
                 mapViewModel,
-                menuViewModel
+                menuViewModel,
+                userViewModel,
+                personViewModel
             )
         }
     }

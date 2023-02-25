@@ -1,9 +1,11 @@
 package zubkov.vadim.pruebasandroiddiseo.screens.models.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import zubkov.vadim.pruebasandroiddiseo.Components.CardExtended
 import zubkov.vadim.pruebasandroiddiseo.screens.mapscreen.ui.MapViewModel
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.Menu
@@ -20,6 +22,7 @@ import zubkov.vadim.pruebasandroiddiseo.screens.splashscreen.SplashScreen
 import zubkov.vadim.pruebasandroiddiseo.screens.users.PersonScreen
 import zubkov.vadim.pruebasandroiddiseo.screens.users.ProfileDetail
 import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.EditUserScreen
+import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.ExternalUserScreen
 import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.PersonViewModel
 import javax.inject.Singleton
 
@@ -69,8 +72,13 @@ fun CustomNavigator(
         composable(route = Routes.Person.route) {
             PersonScreen(navigationController = navigationController,personViewModel,userViewModel,mapViewModel,menuViewModel)
         }
-        composable(route = Routes.PersonDetail.route) {
-            ProfileDetail(navigationController = navigationController,personViewModel,userViewModel)
+        composable(route = Routes.ExtPerson.route,
+            arguments = listOf(navArgument("email") { type = NavType.StringType })) {
+            ExternalUserScreen(navigationController = navigationController,personViewModel,userViewModel,mapViewModel,menuViewModel,it.arguments?.getString("email") ?: "")
+        }
+        composable(route = Routes.PersonDetail.route,
+            arguments = listOf(navArgument("email") { type = NavType.StringType })) {
+            ProfileDetail(navigationController = navigationController,personViewModel,userViewModel,it.arguments?.getString("email") ?: "")
         }
         composable(route = Routes.ModifyUser.route) {
             EditUserScreen(navigationController = navigationController,personViewModel,userViewModel)

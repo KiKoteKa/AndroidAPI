@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import zubkov.vadim.pruebasandroiddiseo.screens.login.ui.UserViewModel
 import zubkov.vadim.pruebasandroiddiseo.screens.users.data.dto.PersonDTO
 import zubkov.vadim.pruebasandroiddiseo.screens.users.domin.usecase.PersonUseCase
@@ -32,5 +33,13 @@ class PersonViewModel @Inject constructor(
             changeList()
             Log.d("Hola 3","Final del Person")
         }
+    }
+
+    fun returnPerson(email:String):PersonDTO?{
+        var person: PersonDTO?
+        runBlocking {
+            person = personUseCase(email).first()
+        }
+        return person
     }
 }

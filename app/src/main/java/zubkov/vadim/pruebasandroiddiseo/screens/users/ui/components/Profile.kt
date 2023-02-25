@@ -32,20 +32,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import zubkov.vadim.pruebasandroiddiseo.R
+import zubkov.vadim.pruebasandroiddiseo.screens.login.ui.UserViewModel
 import zubkov.vadim.pruebasandroiddiseo.screens.mapscreen.ui.MapViewModel
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.data.dto.MenuDTO
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.Components.MainCard
 import zubkov.vadim.pruebasandroiddiseo.screens.menu.ui.MenuViewModel
 import zubkov.vadim.pruebasandroiddiseo.screens.models.navigation.Routes
 import zubkov.vadim.pruebasandroiddiseo.screens.users.data.dto.PersonDTO
+import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.PersonViewModel
 
 
 @ExperimentalFoundationApi
 @Composable
 fun Profile(navigationController: NavHostController, user:PersonDTO,
-            mapViewModel: MapViewModel,menuViewModel: MenuViewModel
+            mapViewModel: MapViewModel,menuViewModel: MenuViewModel,
+            userViewModel: UserViewModel,personViewModel: PersonViewModel,
+            fullScreen:Boolean = false
 ){
-
+        personViewModel.returnPerson(userViewModel)
+        var perfilPropio = false
+        if (user.email == personViewModel.person.value!!.first().email){
+            perfilPropio = true
+        }
         var selectedTabIndex by remember {
             mutableStateOf(0)
         }
@@ -54,8 +62,8 @@ fun Profile(navigationController: NavHostController, user:PersonDTO,
             .background(Color.LightGray)) {
             Header(
                 name = user.nick,
-                false,
-                false,
+                fullScreen,
+                perfilPropio,
                 navigationController
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -65,7 +73,7 @@ fun Profile(navigationController: NavHostController, user:PersonDTO,
                 navigationController,
                 modifier = Modifier.fillMaxWidth(),
                 user,
-                true
+                perfilPropio
             )
             Spacer(modifier = Modifier.height(25.dp))
 
@@ -142,7 +150,6 @@ fun Header(
     mostrarAtras : Boolean,
     mostrarlogout : Boolean,
     navigationController: NavHostController,
-    //globalViewModel: GlobalViewModel
 ) {
         Box(
             modifier = Modifier
@@ -272,7 +279,7 @@ fun ProfileStat(
 fun ButtonSection(
     navigationController: NavHostController,
     modifier: Modifier = Modifier,
-    usuario:PersonDTO,
+    user:PersonDTO,
     perfilPropio : Boolean
 ) {
     val minWidth = 175.dp
@@ -288,6 +295,7 @@ fun ButtonSection(
                 .defaultMinSize(minWidth = minWidth)
                 .height(height),
             navigationController = navigationController,
+            user = user
         )
         if (!perfilPropio) {
             BotonSeguirUser(
@@ -305,14 +313,15 @@ fun BotonDetalleUser(
 modifier: Modifier = Modifier,
 text: String? = null,
 icon: ImageVector? = null,
-navigationController: NavHostController
+navigationController: NavHostController,
+user:PersonDTO
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .clickable {
-                navigationController.navigate(Routes.PersonDetail.route)
+                navigationController.navigate("usersDetail/${user.email}")
             }
             .background(MaterialTheme.colors.background, shape = RoundedCornerShape(12.dp))
             .clip(RoundedCornerShape(12.dp))

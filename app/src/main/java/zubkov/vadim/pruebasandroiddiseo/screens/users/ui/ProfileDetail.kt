@@ -29,43 +29,48 @@ import zubkov.vadim.pruebasandroiddiseo.screens.users.ui.PersonViewModel
 import java.text.SimpleDateFormat
 
 @Composable
-fun ProfileDetail(navigationController: NavHostController,personViewModel: PersonViewModel,userViewModel: UserViewModel){
-    personViewModel.returnPerson(userViewModel)
-    val user = personViewModel.person.value!!.first()
-    Scaffold(
-        topBar = {
-
-            TopAppBar(
-                title = {
-                    Text(
-                        text = user.nick,
-                        modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
-                        color  =Color.Black,
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.h5
-                    )
-                },
-                backgroundColor = MaterialTheme.colors.background,
-                navigationIcon = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(24.dp, 24.dp)
-                            .clickable {
-                                navigationController.navigateUp()
-                            },
-                        tint = Color.Black
-                    )
-                }
-            )
-        },
-
-        content = {
-            PerfilUsuarioDetalleComp(user,true,navigationController)
+fun ProfileDetail(navigationController: NavHostController,personViewModel: PersonViewModel,userViewModel: UserViewModel,email:String){
+    var user = personViewModel.returnPerson(email)
+    if(user != null) {
+        personViewModel.returnPerson(userViewModel)
+        var perfilPropio = false
+        if (user.email == personViewModel.person.value!!.first().email){
+            perfilPropio = true
         }
-    )
+        Scaffold(
+            topBar = {
 
+                TopAppBar(
+                    title = {
+                        Text(
+                            text = user.nick,
+                            modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.h5
+                        )
+                    },
+                    backgroundColor = MaterialTheme.colors.background,
+                    navigationIcon = {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(24.dp, 24.dp)
+                                .clickable {
+                                    navigationController.navigateUp()
+                                },
+                            tint = Color.Black
+                        )
+                    }
+                )
+            },
+
+            content = {
+                PerfilUsuarioDetalleComp(user, perfilPropio, navigationController)
+            }
+        )
+    }
 }
 
 @Composable
@@ -108,7 +113,7 @@ fun Texto(valor:String,texto:String,icono:ImageVector = Icons.Default.Person){
             }
             Row(modifier = Modifier.width(LocalConfiguration.current.screenWidthDp.dp*2/ 3), horizontalArrangement = Arrangement.End) {
                 Text(
-                    color = Color.White,
+                    color = Color.Black,
                     text = valor,
                     fontSize = 16.sp
                 )

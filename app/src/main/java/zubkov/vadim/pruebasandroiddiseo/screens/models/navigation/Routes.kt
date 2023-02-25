@@ -11,6 +11,7 @@ sealed class Routes(val route: String) {
     object GmapScreen: Routes("gmap")
     object GmapPost: Routes("gmap_view")
     object Person: Routes("users")
-    object PersonDetail: Routes("usersDetail")
+    object ExtPerson: Routes("extUsers/{email}")
+    object PersonDetail: Routes("usersDetail/{email}")
     object ModifyUser: Routes("modifyUser")
 }
